@@ -1,14 +1,22 @@
 package com.enviro.assessment.grad001.mtramothole.service;
 
-import com.enviro.assessment.grad001.mtramothole.repository.WasteRepository;
-import org.springframework.stereotype.Service;
+import com.enviro.assessment.grad001.mtramothole.model.Waste;
 
-@Service
-public class WasteService {
+import java.util.List;
 
-    private final WasteRepository wasteRepository;
+public interface WasteService {
 
-    public WasteService(WasteRepository wasteRepository) {
-        this.wasteRepository = wasteRepository;
-    }
+    int saveWaste(Waste waste);
+
+    int deleteWasteById(Long id);
+
+    int updateWaste(Waste waste);
+
+    Waste findWasteById(Long id);
+
+    int deleteWasteByWastecategory(String wastecategory);
+
+    int findWasteByWastecategory(String wastecategory);
+
+    List<Waste> findAll();
 }
