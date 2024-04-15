@@ -1,4 +1,4 @@
-package org.example.enviro365assessment_mtramothole_gradjava;
+package com.enviro.assessment.grad001.mtramothole;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

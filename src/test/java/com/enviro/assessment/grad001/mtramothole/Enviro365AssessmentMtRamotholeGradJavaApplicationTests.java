@@ -1,4 +1,4 @@
-package org.example.enviro365assessment_mtramothole_gradjava;
+package com.enviro.assessment.grad001.mtramothole;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
