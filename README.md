@@ -34,12 +34,12 @@ including request and response formats, will be provided in the subsequent secti
 - Parameters: `id` (path parameter)
 - Response: A `Waste` object
 
-### Get a waste by category
+### Get list of wastes by category
 
 - Method: GET
 - Path: `/v1/api/waste/category/{category}`
 - Parameters: `category` (path parameter)
-- Response: A `Waste` object
+- Response: A list of `Waste` object
 
 ### Get all wastes
 
