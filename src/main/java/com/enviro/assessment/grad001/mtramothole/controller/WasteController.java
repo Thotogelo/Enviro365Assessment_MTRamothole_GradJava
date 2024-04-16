@@ -2,72 +2,68 @@ package com.enviro.assessment.grad001.mtramothole.controller;
 
 import com.enviro.assessment.grad001.mtramothole.model.Waste;
 import com.enviro.assessment.grad001.mtramothole.service.WasteService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/v1/api/waste")
-@Tag(name = "Waste API", description = "Get waste data")
+@Tag(name = "Waste API", description = "Retrieve, Remove, Save, and Update waste data")
 public class WasteController {
 
     private final WasteService wasteService;
-    private static final Logger logger = LoggerFactory.getLogger(WasteController.class);
-    private static final String errorOccuredMessage = "An error occurred while processing the request.";
-
     public WasteController(WasteService wasteService) {
         this.wasteService = wasteService;
     }
 
-    @PostMapping("/save")
-    public ResponseEntity<String> saveWaste(@Valid @RequestBody Waste waste) {
-        try {
-            int rowsAffected = wasteService.saveWaste(waste);
-            return (rowsAffected > 0) ? new ResponseEntity<>("Waste successfully saved.", HttpStatus.CREATED) :
-                    new ResponseEntity<>("Failed to save waste.", HttpStatus.INTERNAL_SERVER_ERROR);
-        } catch (Exception e) {
-            logger.error("Error occurred while saving waste", e);
-            return new ResponseEntity<>(errorOccuredMessage, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    @PostMapping(value = "/save", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Save a waste", description = "Save a waste data")
+    public ResponseEntity<Waste> saveWaste(@Valid @RequestBody Waste waste) {
+        return ResponseEntity.ok(wasteService.saveWaste(waste));
     }
 
-    @GetMapping("/find/{wasteid}")
-    public ResponseEntity<Waste> findWaste(@PathVariable("wasteid") Long wasteid) {
-        try {
-            Waste waste = wasteService.findWasteById(wasteid);
-            return (waste != null) ? new ResponseEntity<>(waste, HttpStatus.OK) :
-                    new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            logger.error("Error occurred while finding waste", e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    @GetMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Get a waste by id", description = "Returns a waste by id")
+    public ResponseEntity<Waste> getWasteById(@PathVariable("id") Long wasteid) {
+        Waste waste = wasteService.findWasteById(wasteid);
+        return (waste != null) ? ResponseEntity.ok(waste) : ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/delete/{wasteid}")
-    public ResponseEntity<String> deleteWaste(@PathVariable("wasteid") Long wasteid) {
-        try {
-            int rowsAffected = wasteService.deleteWasteById(wasteid);
-            return (rowsAffected > 0) ? new ResponseEntity<>("Waste successfully deleted.", HttpStatus.OK) :
-                    new ResponseEntity<>("Failed to delete waste.", HttpStatus.INTERNAL_SERVER_ERROR);
-        } catch (Exception e) {
-            logger.error("Error occurred while deleting waste", e);
-            return new ResponseEntity<>(errorOccuredMessage, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    @GetMapping(value = "/category/{category}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Get a waste by category", description = "Returns a waste by category")
+    public ResponseEntity<List<Waste>> getWasteByCategory(@PathVariable("category") String wastecategory) {
+        List<Waste> waste = wasteService.findWasteByWastecategory(wastecategory);
+        return (waste != null) ? ResponseEntity.ok(waste) : ResponseEntity.notFound().build();
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<String> updateWaste(@Valid @RequestBody Waste waste) {
-        try {
-            int rowsAffected = wasteService.updateWaste(waste);
-            return (rowsAffected > 0) ? new ResponseEntity<>("Waste successfully updated.", HttpStatus.OK) :
-                    new ResponseEntity<>("Failed to update waste.", HttpStatus.INTERNAL_SERVER_ERROR);
-        } catch (Exception e) {
-            logger.error("Error occurred while updating waste", e);
-            return new ResponseEntity<>(errorOccuredMessage, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    @DeleteMapping(value = "/delete/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Delete a waste by id", description = "Delete a waste by id")
+    public ResponseEntity<String> deleteWasteById(@PathVariable("id") Long wasteid) {
+        wasteService.removeWasteById(wasteid);
+        return ResponseEntity.ok("Waste successfully deleted.");
+    }
+
+    @DeleteMapping(value = "/delete/category/{category}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Delete a waste by category", description = "Delete a waste by category")
+    public ResponseEntity<String> deleteWasteByCategory(@PathVariable("category") String category) {
+        wasteService.removeWasteByWastecategory(category);
+        return ResponseEntity.ok("Waste successfully deleted.");
+    }
+
+    @PutMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Update a waste", description = "Update a waste data")
+    public ResponseEntity<Waste> updateWaste(@Valid @RequestBody Waste waste) {
+        return ResponseEntity.ok(wasteService.updateWaste(waste));
+    }
+
+    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Get all waste", description = "Returns all waste data")
+    public ResponseEntity<List<Waste>> getAllWastes() {
+        return ResponseEntity.ok(wasteService.findAll());
     }
 }
