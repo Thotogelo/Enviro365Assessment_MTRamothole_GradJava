@@ -22,14 +22,4 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleWasteNotFoundException(WasteNotFoundException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
-
-//    @ExceptionHandler(MethodArgumentNotValidException.class)
-//    public ResponseEntity<String> handleValidationExceptions(MethodArgumentNotValidException ex) {
-//        String errorMessage = ex.getBindingResult()
-//                .getFieldErrors()
-//                .stream()
-//                .map(error -> error.getField() + ": " + error.getDefaultMessage())
-//                .collect(Collectors.joining(", "));
-//        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
-//    }
 }
