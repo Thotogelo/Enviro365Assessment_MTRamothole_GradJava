@@ -61,8 +61,8 @@ class WasteControllerTest {
     void shouldSaveWaste() throws Exception {
         when(wasteService.saveWaste(Mockito.any(Waste.class))).thenReturn(waste);
 
-        // Perform a POST request to the /v1/api/waste/save endpoint and check if the
-        // response is as expected
+        // Perform a POST request to the /v1/api/waste/save endpoint and check if the response
+        // is as expected
         // and use the object mapper to convert the waste object to a JSON string
         mockMvc.perform(post("/v1/api/waste/save")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -78,7 +78,7 @@ class WasteControllerTest {
 
         // Perform a GET request to the /v1/api/waste/1 endpoint and check if the
         // response is as expected
-        // and ues the object mapper to convert the waste object to a JSON string
+        // and use the object mapper to convert the waste object to a JSON string
         mockMvc.perform(get("/v1/api/waste/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(waste)));
@@ -90,8 +90,8 @@ class WasteControllerTest {
         List<Waste> wasteList = List.of(waste);
         when(wasteService.findWasteByWastecategory(Mockito.anyString())).thenReturn(wasteList);
 
-        // Perform a GET request to the /v1/api/waste/category/test endpoint and check
-        // if the response is as expected
+        // Perform a GET request to the /v1/api/waste/category/test endpoint
+        // and check if the response is as expected
         // and use the object mapper to convert the waste object to a JSON string
         mockMvc.perform(get("/v1/api/waste/category/test"))
                 .andExpect(status().isOk())
@@ -103,8 +103,7 @@ class WasteControllerTest {
     void shouldDeleteWasteById() throws Exception {
         Long id = 1L;
 
-        // Mock the removeWasteById method to do nothing, since we are not testing the
-        // method itself but the controller
+        // Mock the removeWasteById method to do nothing, since we are not testing the method itself but the controller
         doNothing().when(wasteService).removeWasteById(id);
 
         // Perform a DELETE request to the /v1/api/waste/delete/1 endpoint and check if
