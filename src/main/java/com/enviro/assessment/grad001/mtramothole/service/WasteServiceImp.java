@@ -34,8 +34,7 @@ public class WasteServiceImp implements WasteService {
     }
 
     // Method to find a waste object by its id. Returns the found waste object.
-    // exception is thrown if waste is not found and handled in the global exception
-    // handler
+    // exception is thrown if waste is not found and handled in the global exception handler
     @Override
     public Waste findWasteById(Long id) {
         return Optional.ofNullable(wasteRepository.findWasteById(id))
@@ -43,8 +42,7 @@ public class WasteServiceImp implements WasteService {
     }
 
     // Method to remove a waste object by its id.
-    // exception is thrown if waste is not found and handled in the global exception
-    // handler
+    // exception is thrown if waste is not found and handled in the global exception handler
     @Override
     @Transactional
     public void removeWasteById(Long id) {
@@ -55,8 +53,7 @@ public class WasteServiceImp implements WasteService {
     }
 
     // Method to remove waste objects by their category.
-    // exception is thrown if waste is not found and handled in the global exception
-    // handler
+    // exception is thrown if waste is not found and handled in the global exception handler
     @Override
     @Transactional
     public void removeWasteByWastecategory(String category) {
@@ -66,10 +63,8 @@ public class WasteServiceImp implements WasteService {
         }
     }
 
-    // Method to find waste objects by their category. Returns a list of found waste
-    // objects.
-    // exception is thrown if waste is not found and handled in the global exception
-    // handler
+    // Method to find waste objects by their category. Returns a list of found waste objects.
+    // exception is thrown if waste is not found and handled in the global exception handler
     @Override
     public List<Waste> findWasteByWastecategory(String category) {
         List<Waste> wasteList = wasteRepository.findWasteByWastecategory(category);
@@ -81,8 +76,7 @@ public class WasteServiceImp implements WasteService {
     }
 
     // Method to find all waste objects. Returns a list of all waste objects.
-    // exception is thrown if waste is not found and handled in the global exception
-    // handler
+    // exception is thrown if waste is not found and handled in the global exception handler
     @Override
     public List<Waste> findAll() {
         return wasteRepository.findAll();
