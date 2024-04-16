@@ -6,17 +6,17 @@ import java.util.List;
 
 public interface WasteService {
 
-    int saveWaste(Waste waste);
+    Waste saveWaste(Waste waste);
 
-    int deleteWasteById(Long id);
+    void removeWasteById(Long id);
 
-    int updateWaste(Waste waste);
+    Waste updateWaste(Waste waste);
 
     Waste findWasteById(Long id);
 
-    int deleteWasteByWastecategory(String wastecategory);
+    void removeWasteByWastecategory(String category);
 
-    int findWasteByWastecategory(String wastecategory);
+    List<Waste> findWasteByWastecategory(String category);
 
     List<Waste> findAll();
 }
