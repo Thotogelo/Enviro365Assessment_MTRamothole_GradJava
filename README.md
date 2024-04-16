@@ -68,7 +68,7 @@ including request and response formats, will be provided in the subsequent secti
 - Parameters: `id` (path parameter)
 - Response: A string message indicating the deletion status
 
-### Delete a waste by category
+### Delete a list waste by category
 
 - Method: DELETE
 - Path: /v1/api/waste/category/{category}
