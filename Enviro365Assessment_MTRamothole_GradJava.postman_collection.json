@@ -1,0 +1,194 @@
+{
+	"info": {
+		"_postman_id": "e83188f5-a4b0-4219-9ca2-5a201f8e78ce",
+		"name": "Enviro365Assessment_MTRamothole_GradJava",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23432227"
+	},
+	"item": [
+		{
+			"name": "Save waste",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"wastecategory\": \"Paper\",\r\n    \"disposalguideline\": \"Recycle in appropriate bins.\",\r\n    \"recyclingtip\": \"Rinse and remove lids before recycling.\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/api/waste/save",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"api",
+						"waste",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update waste",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 2,\r\n    \"wastecategory\": \"Glass\",\r\n    \"disposalguideline\": \"Recycle in appropriate bins.\",\r\n    \"recyclingtip\": \"Rinse and remove x lids before recycling.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/api/waste/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"api",
+						"waste",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find all waste",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/api/waste/find/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"api",
+						"waste",
+						"find",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find by waste id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/api/waste/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"api",
+						"waste",
+						"1"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find by category",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/api/waste/category/Paper",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"api",
+						"waste",
+						"category",
+						"Paper"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete waste by id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/api/waste/delete/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"api",
+						"waste",
+						"delete",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete waste by category",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/api/waste/delete/category/Paper",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"api",
+						"waste",
+						"delete",
+						"category",
+						"Paper"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
