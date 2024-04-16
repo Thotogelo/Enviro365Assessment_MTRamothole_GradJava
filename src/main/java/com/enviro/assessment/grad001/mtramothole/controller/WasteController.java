@@ -17,16 +17,19 @@ import java.util.List;
 public class WasteController {
 
     private final WasteService wasteService;
+
     public WasteController(WasteService wasteService) {
         this.wasteService = wasteService;
     }
 
+    // Endpoint to save a new waste object
     @PostMapping(value = "/save", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Save a waste", description = "Save a waste data")
     public ResponseEntity<Waste> saveWaste(@Valid @RequestBody Waste waste) {
         return ResponseEntity.ok(wasteService.saveWaste(waste));
     }
 
+    // Endpoint to get a waste object by id
     @GetMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Get a waste by id", description = "Returns a waste by id")
     public ResponseEntity<Waste> getWasteById(@PathVariable("id") Long wasteid) {
@@ -34,6 +37,7 @@ public class WasteController {
         return (waste != null) ? ResponseEntity.ok(waste) : ResponseEntity.notFound().build();
     }
 
+    // Endpoint to get a waste object by category
     @GetMapping(value = "/category/{category}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Get a waste by category", description = "Returns a waste by category")
     public ResponseEntity<List<Waste>> getWasteByCategory(@PathVariable("category") String wastecategory) {
@@ -41,6 +45,7 @@ public class WasteController {
         return (waste != null) ? ResponseEntity.ok(waste) : ResponseEntity.notFound().build();
     }
 
+    // Endpoint to delete a waste object by id
     @DeleteMapping(value = "/delete/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Delete a waste by id", description = "Delete a waste by id")
     public ResponseEntity<String> deleteWasteById(@PathVariable("id") Long wasteid) {
@@ -48,6 +53,7 @@ public class WasteController {
         return ResponseEntity.ok("Waste successfully deleted.");
     }
 
+    // Endpoint to delete a waste object by category
     @DeleteMapping(value = "/delete/category/{category}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Delete a waste by category", description = "Delete a waste by category")
     public ResponseEntity<String> deleteWasteByCategory(@PathVariable("category") String category) {
@@ -55,12 +61,14 @@ public class WasteController {
         return ResponseEntity.ok("Waste successfully deleted.");
     }
 
+    // Endpoint to update a waste object
     @PutMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Update a waste", description = "Update a waste data")
     public ResponseEntity<Waste> updateWaste(@Valid @RequestBody Waste waste) {
         return ResponseEntity.ok(wasteService.updateWaste(waste));
     }
 
+    // Endpoint to get all waste objects
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Get all waste", description = "Returns all waste data")
     public ResponseEntity<List<Waste>> getAllWastes() {
