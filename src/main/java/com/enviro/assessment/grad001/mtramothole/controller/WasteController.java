@@ -39,7 +39,7 @@ public class WasteController {
 
     // Endpoint to get a list of waste object by category
     @GetMapping(value = "/category/{category}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Get a waste by category", description = "Returns a waste list by category")
+    @Operation(summary = "Get a waste list by category", description = "Returns a waste list by category")
     public ResponseEntity<List<Waste>> getWasteByCategory(@PathVariable("category") String wastecategory) {
         List<Waste> waste = wasteService.findWasteByWastecategory(wastecategory);
         return (waste != null) ? ResponseEntity.ok(waste) : ResponseEntity.notFound().build();
