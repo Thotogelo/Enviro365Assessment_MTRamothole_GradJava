@@ -88,6 +88,9 @@ response with an appropriate HTTP status code and a message describing the error
 The application uses an in-memory H2 database for storing data. The data in the database is temporary and will be lost
 when the application is stopped.
 
+  ##NOTE
+  Issue with database: The database continues to be case sensitive despite clear configuration and URL disabling it, ensure that when requesting Categories the category name is in PascelCase e.g. "GeneralWaste" instead of "generalwaste"
+
 ## Testing
 
 Unit tests have been written to ensure the functionality, reliability, and performance of the API endpoints. To run the
