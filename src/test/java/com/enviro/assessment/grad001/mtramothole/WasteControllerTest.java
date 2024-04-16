@@ -84,7 +84,7 @@ class WasteControllerTest {
                 .andExpect(content().json(objectMapper.writeValueAsString(waste)));
     }
 
-    // Test to check if a waste is returned by its category
+    // Test to check if a waste list is returned by its category
     @Test
     void shouldReturnWastesByCategory() throws Exception {
         List<Waste> wasteList = List.of(waste);
@@ -114,7 +114,7 @@ class WasteControllerTest {
         verify(wasteService, times(1)).removeWasteById(id);
     }
 
-    // Test to check if wastes are deleted by their category
+    // Test to check if wastes lists are deleted by their category
     @Test
     void shouldDeleteWastesByCategory() throws Exception {
         String category = "test";
