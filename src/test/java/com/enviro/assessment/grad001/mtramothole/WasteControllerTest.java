@@ -74,7 +74,7 @@ class WasteControllerTest {
     }
 
     @Test
-    void shouldReturnWasteByCategory() throws Exception {
+    void shouldReturnWastesByCategory() throws Exception {
         List<Waste> wasteList = List.of(waste);
         when(wasteService.findWasteByWastecategory(Mockito.anyString())).thenReturn(wasteList);
 
@@ -96,7 +96,7 @@ class WasteControllerTest {
     }
 
     @Test
-    void shouldDeleteWasteByCategory() throws Exception {
+    void shouldDeleteWastesByCategory() throws Exception {
         String category = "test";
 
         Mockito.doNothing().when(wasteService).removeWasteByWastecategory(category);
