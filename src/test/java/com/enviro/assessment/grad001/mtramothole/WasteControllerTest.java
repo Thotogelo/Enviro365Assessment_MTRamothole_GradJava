@@ -5,7 +5,6 @@ import com.enviro.assessment.grad001.mtramothole.service.WasteService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -40,8 +39,9 @@ class WasteControllerTest {
     void setUp() {
         waste = new Waste();
         waste.setId(1L);
-        waste.setWastecategory("test");
-        waste.setDisposalguideline("test");
+        waste.setWastecategory("Paper");
+        waste.setDisposalguideline("Place in the recycling bin.");
+        waste.setRecyclingtip("Recycle paper to save trees.");
     }
 
     // Test to check if all wastes are returned
@@ -59,9 +59,10 @@ class WasteControllerTest {
     // Test to check if a waste is saved
     @Test
     void shouldSaveWaste() throws Exception {
-        when(wasteService.saveWaste(Mockito.any(Waste.class))).thenReturn(waste);
+        when(wasteService.saveWaste(any(Waste.class))).thenReturn(waste);
 
-        // Perform a POST request to the /v1/api/waste/save endpoint and check if the response
+        // Perform a POST request to the /v1/api/waste/save endpoint and check if the
+        // response
         // is as expected
         // and use the object mapper to convert the waste object to a JSON string
         mockMvc.perform(post("/v1/api/waste/save")
@@ -74,7 +75,7 @@ class WasteControllerTest {
     // Test to check if a waste is returned by its id
     @Test
     void shouldReturnWasteById() throws Exception {
-        when(wasteService.findWasteById(Mockito.anyLong())).thenReturn(waste);
+        when(wasteService.findWasteById(anyLong())).thenReturn(waste);
 
         // Perform a GET request to the /v1/api/waste/1 endpoint and check if the
         // response is as expected
@@ -88,7 +89,7 @@ class WasteControllerTest {
     @Test
     void shouldReturnWastesByCategory() throws Exception {
         List<Waste> wasteList = List.of(waste);
-        when(wasteService.findWasteListByWastecategory(Mockito.anyString())).thenReturn(wasteList);
+        when(wasteService.findWasteListByWastecategory(anyString())).thenReturn(wasteList);
 
         // Perform a GET request to the /v1/api/waste/category/test endpoint
         // and check if the response is as expected
@@ -103,7 +104,8 @@ class WasteControllerTest {
     void shouldDeleteWasteById() throws Exception {
         Long id = 1L;
 
-        // Mock the removeWasteById method to do nothing, since we are not testing the method itself but the controller
+        // Mock the removeWasteById method to do nothing, since we are not testing the
+        // method itself but the controller
         doNothing().when(wasteService).removeWasteById(id);
 
         // Perform a DELETE request to the /v1/api/waste/delete/1 endpoint and check if
@@ -133,7 +135,7 @@ class WasteControllerTest {
     // Test to check if a waste is updated
     @Test
     void shouldUpdateWaste() throws Exception {
-        when(wasteService.updateWaste(Mockito.any(Waste.class))).thenReturn(waste);
+        when(wasteService.updateWaste(any(Waste.class))).thenReturn(waste);
 
         // Perform a PUT request to the /v1/api/waste/update endpoint and check if the
         // response is as expected
