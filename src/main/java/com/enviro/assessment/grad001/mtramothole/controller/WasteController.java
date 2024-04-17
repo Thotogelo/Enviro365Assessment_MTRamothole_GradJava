@@ -41,7 +41,7 @@ public class WasteController {
     @GetMapping(value = "/category/{category}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Get a waste list by category", description = "Returns a waste list by category")
     public ResponseEntity<List<Waste>> getWasteByCategory(@PathVariable("category") String category) {
-        List<Waste> waste = wasteService.findWasteByWastecategory(category);
+        List<Waste> waste = wasteService.findWasteListByWastecategory(category);
         return (waste != null) ? ResponseEntity.ok(waste) : ResponseEntity.notFound().build();
     }
 
@@ -57,7 +57,7 @@ public class WasteController {
     @DeleteMapping(value = "/delete/category/{category}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Delete a waste list by category", description = "Delete a waste list by category")
     public ResponseEntity<String> deleteWasteByCategory(@PathVariable("category") String category) {
-        wasteService.removeWasteByWastecategory(category);
+        wasteService.removeWasteListByWastecategory(category);
         return ResponseEntity.ok("Waste list successfully deleted.");
     }
 

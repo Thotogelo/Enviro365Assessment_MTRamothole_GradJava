@@ -88,7 +88,7 @@ class WasteControllerTest {
     @Test
     void shouldReturnWastesByCategory() throws Exception {
         List<Waste> wasteList = List.of(waste);
-        when(wasteService.findWasteByWastecategory(Mockito.anyString())).thenReturn(wasteList);
+        when(wasteService.findWasteListByWastecategory(Mockito.anyString())).thenReturn(wasteList);
 
         // Perform a GET request to the /v1/api/waste/category/test endpoint
         // and check if the response is as expected
@@ -121,13 +121,13 @@ class WasteControllerTest {
 
         // Mock the removeWasteByWastecategory method to do nothing, since we are not
         // testing the method itself but the controller
-        doNothing().when(wasteService).removeWasteByWastecategory(category);
+        doNothing().when(wasteService).removeWasteListByWastecategory(category);
 
         // Perform a DELETE request to the /v1/api/waste/delete/category/test endpoint
         mockMvc.perform(delete("/v1/api/waste/delete/category/" + category))
                 .andExpect(status().isOk());
 
-        verify(wasteService, times(1)).removeWasteByWastecategory(category);
+        verify(wasteService, times(1)).removeWasteListByWastecategory(category);
     }
 
     // Test to check if a waste is updated

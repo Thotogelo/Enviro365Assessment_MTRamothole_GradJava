@@ -56,7 +56,7 @@ public class WasteServiceImp implements WasteService {
     // exception is thrown if waste is not found and handled in the global exception handler
     @Override
     @Transactional
-    public void removeWasteByWastecategory(String category) {
+    public void removeWasteListByWastecategory(String category) {
         int rowsAffected = wasteRepository.deleteWasteByWastecategory(category);
         if (rowsAffected == 0) {
             throw new WasteNotFoundException("Waste list with category " + category + " not found.");
@@ -66,7 +66,7 @@ public class WasteServiceImp implements WasteService {
     // Method to find waste objects by their category. Returns a list of found waste objects.
     // exception is thrown if waste is not found and handled in the global exception handler
     @Override
-    public List<Waste> findWasteByWastecategory(String category) {
+    public List<Waste> findWasteListByWastecategory(String category) {
         List<Waste> wasteList = wasteRepository.findWasteByWastecategory(category);
         if (wasteList != null) {
             return wasteList;

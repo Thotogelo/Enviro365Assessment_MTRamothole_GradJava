@@ -22,11 +22,11 @@ public interface WasteService {
     Waste findWasteById(Long id);
 
     // Method to remove waste objects by their category.
-    void removeWasteByWastecategory(String category);
+    void removeWasteListByWastecategory(String category);
 
     // Method to find waste objects by their category. Returns a list of found waste
     // objects.
-    List<Waste> findWasteByWastecategory(String category);
+    List<Waste> findWasteListByWastecategory(String category);
 
     // Method to find all waste objects. Returns a list of all waste objects.
     List<Waste> findAll();
