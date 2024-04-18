@@ -120,4 +120,7 @@ postman ensure that the Headers are set to `Content-Type: application/json`
 
 Get all wastes:
 When using postman ensure that the Headers are set to `Content-Type: application/json`
+
+
+
 ![img.png](img.png)
