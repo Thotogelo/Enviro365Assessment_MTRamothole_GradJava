@@ -27,6 +27,11 @@ and save the data in the database.
 The API consists of several endpoints to facilitate waste data management. Detailed documentation for each endpoint,
 including request and response formats, will be provided in the subsequent sections.
 
+![img.png](img.png)
+
+
+
+
 ### Get a waste by id
 
 - Method: GET
@@ -120,7 +125,3 @@ postman ensure that the Headers are set to `Content-Type: application/json`
 
 Get all wastes:
 When using postman ensure that the Headers are set to `Content-Type: application/json`
-
-
-
-![img.png](img.png)
