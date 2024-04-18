@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
     // It returns the exception's message with a status of NOT_FOUND.
     @ExceptionHandler(WasteNotFoundException.class)
     public ProblemDetail handleWasteNotFoundException(WasteNotFoundException ex) {
-        logger.error("Waste not found", ex);
+        logger.error(ex.getMessage(), ex);
         return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 }
