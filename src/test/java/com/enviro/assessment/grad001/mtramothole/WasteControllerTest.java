@@ -62,9 +62,7 @@ class WasteControllerTest {
         when(wasteService.saveWaste(any(Waste.class))).thenReturn(waste);
 
         // Perform a POST request to the /v1/api/waste/save endpoint and check if the
-        // response
-        // is as expected
-        // and use the object mapper to convert the waste object to a JSON string
+        // response is as expected and use the object mapper to convert the waste object to a JSON string
         mockMvc.perform(post("/v1/api/waste/save")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(waste)))
