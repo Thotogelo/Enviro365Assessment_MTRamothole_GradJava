@@ -37,8 +37,8 @@ public class WasteServiceImp implements WasteService {
     // exception is thrown if waste is not found and handled in the global exception handler
     @Override
     public Waste findWasteById(Long id) {
-        return Optional.ofNullable(wasteRepository.findWasteById(id))
-                .orElseThrow(() -> new WasteNotFoundException("Waste with id " + id + " not found."));
+        Optional<Waste> waste = wasteRepository.findById(id);
+        return waste.orElseThrow(() -> new WasteNotFoundException("Waste with id " + id + " not found."));
     }
 
     // Method to remove a waste object by its id.
