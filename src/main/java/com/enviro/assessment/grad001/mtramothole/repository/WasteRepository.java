@@ -10,18 +10,18 @@ import java.util.List;
 public interface WasteRepository extends CrudRepository<Waste, Long> {
 
     // Method to delete a waste object by its id. Returns the number of rows affected.
-    public int deleteWasteById(Long id);
+    int deleteWasteById(Long id);
 
     // Method to find a waste object by its id. Returns the found waste object.
-    public Waste findWasteById(Long id);
+    Waste findWasteById(Long id);
 
     // Method to delete waste objects by their category. Returns the number of rows affected.
-    public int deleteWasteByWastecategory(String wastecategory);
+    int deleteWasteByWastecategory(String wastecategory);
 
     // Method to find waste objects by their category. Returns a list of found waste objects.
-    public List<Waste> findWasteByWastecategory(String wastecategory);
+    List<Waste> findWasteByWastecategory(String wastecategory);
 
     // Method to find all waste objects. Returns a list of all waste objects.
     @Override
-    public List<Waste> findAll();
+    List<Waste> findAll();
 }
