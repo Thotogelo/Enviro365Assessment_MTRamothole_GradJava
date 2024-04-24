@@ -108,9 +108,9 @@ The tests cover a variety of scenarios, including:
 - Adding a waste
 - Updating a waste
 - Deleting a waste
-- Deleting wastes by category
+- Deleting wastes list by category
 - Retrieving a waste by its ID
-- Retrieving a wastes by Category
+- Retrieving a waste list by Category
 - Retrieving all wastes
 
 ##NOTE
