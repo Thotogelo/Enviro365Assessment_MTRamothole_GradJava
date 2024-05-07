@@ -18,31 +18,24 @@ public class WasteServiceImp implements WasteService {
         this.wasteRepository = wasteRepository;
     }
 
-    // Method to save a waste object. Returns the saved waste object.
     @Override
     @Transactional
     public Waste saveWaste(Waste waste) {
         return wasteRepository.save(waste);
     }
 
-    // Save can be used to update as well
-    // Method to update a waste object. Returns the updated waste object.
     @Override
     @Transactional
     public Waste updateWaste(Waste waste) {
         return wasteRepository.save(waste);
     }
 
-    // Method to find a waste object by its id. Returns the found waste object.
-    // exception is thrown if waste is not found and handled in the global exception handler
     @Override
     public Waste findWasteById(Long id) {
         Optional<Waste> waste = wasteRepository.findById(id);
         return waste.orElseThrow(() -> new WasteNotFoundException("Waste with id " + id + " not found."));
     }
 
-    // Method to remove a waste object by its id.
-    // exception is thrown if waste is not found and handled in the global exception handler
     @Override
     @Transactional
     public void removeWasteById(Long id) {
@@ -52,8 +45,6 @@ public class WasteServiceImp implements WasteService {
         }
     }
 
-    // Method to remove waste objects by their category.
-    // exception is thrown if waste is not found and handled in the global exception handler
     @Override
     @Transactional
     public void removeWasteListByWastecategory(String category) {
@@ -63,8 +54,6 @@ public class WasteServiceImp implements WasteService {
         }
     }
 
-    // Method to find waste objects by their category. Returns a list of found waste objects.
-    // exception is thrown if waste is not found and handled in the global exception handler
     @Override
     public List<Waste> findWasteListByWastecategory(String category) {
         List<Waste> wasteList = wasteRepository.findWasteByWastecategory(category);
@@ -75,8 +64,6 @@ public class WasteServiceImp implements WasteService {
         }
     }
 
-    // Method to find all waste objects. Returns a list of all waste objects.
-    // exception is thrown if waste is not found and handled in the global exception handler
     @Override
     public List<Waste> findAll() {
         return wasteRepository.findAll();
