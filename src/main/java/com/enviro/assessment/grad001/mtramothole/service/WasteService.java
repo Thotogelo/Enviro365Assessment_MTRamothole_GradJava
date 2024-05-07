@@ -1,33 +1,64 @@
 package com.enviro.assessment.grad001.mtramothole.service;
 
+import com.enviro.assessment.grad001.mtramothole.exception.WasteNotFoundException;
 import com.enviro.assessment.grad001.mtramothole.model.Waste;
+import com.enviro.assessment.grad001.mtramothole.repository.WasteRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
-// Interface for the WasteService class
-// Exists to handle the CRUD operations for the Waste class, and to provide a way to handle exceptions and business logic away from the controller
-// The WasteServiceImp class implements this interface
-public interface WasteService {
+@Service
+public class WasteService {
 
-    // Method to save a waste object. Returns the saved waste object.
-    Waste saveWaste(Waste waste);
+    private final WasteRepository wasteRepository;
 
-    // Method to remove a waste object by its id.
-    void removeWasteById(Long id);
+    public WasteService(WasteRepository wasteRepository) {
+        this.wasteRepository = wasteRepository;
+    }
 
-    // Method to update a waste object. Returns the updated waste object.
-    Waste updateWaste(Waste waste);
+    @Transactional
+    public Waste saveWaste(Waste waste) {
+        return wasteRepository.save(waste);
+    }
 
-    // Method to find a waste object by its id. Returns the found waste object.
-    Waste findWasteById(Long id);
+    @Transactional
+    public Waste updateWaste(Waste waste) {
+        return wasteRepository.save(waste);
+    }
 
-    // Method to remove waste objects by their category.
-    void removeWasteListByWastecategory(String category);
+    public Waste findWasteById(Long id) {
+        Optional<Waste> waste = wasteRepository.findById(id);
+        return waste.orElseThrow(() -> new WasteNotFoundException("Waste with id " + id + " not found."));
+    }
 
-    // Method to find waste objects by their category. Returns a list of found waste
-    // objects.
-    List<Waste> findWasteListByWastecategory(String category);
+    @Transactional
+    public void removeWasteById(Long id) {
+        int rowsAffected = wasteRepository.deleteWasteById(id);
+        if (rowsAffected == 0) {
+            throw new WasteNotFoundException("Waste with id " + id + " not found.");
+        }
+    }
 
-    // Method to find all waste objects. Returns a list of all waste objects.
-    List<Waste> findAll();
+    @Transactional
+    public void removeWasteListByWastecategory(String category) {
+        int rowsAffected = wasteRepository.deleteWasteByWastecategory(category);
+        if (rowsAffected == 0) {
+            throw new WasteNotFoundException("Waste list with category " + category + " not found.");
+        }
+    }
+
+    public List<Waste> findWasteListByWastecategory(String category) {
+        List<Waste> wasteList = wasteRepository.findWasteByWastecategory(category);
+        if (wasteList != null) {
+            return wasteList;
+        } else {
+            throw new WasteNotFoundException("Waste lists with category " + category + " not found.");
+        }
+    }
+
+    public List<Waste> findAll() {
+        return (List<Waste>) wasteRepository.findAll();
+    }
 }

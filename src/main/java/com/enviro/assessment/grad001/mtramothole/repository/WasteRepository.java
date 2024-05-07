@@ -11,12 +11,8 @@ public interface WasteRepository extends CrudRepository<Waste, Long> {
 
     int deleteWasteById(Long id);
 
-    Waste findWasteById(Long id);
-
     int deleteWasteByWastecategory(String wastecategory);
 
     List<Waste> findWasteByWastecategory(String wastecategory);
 
-    @Override
-    List<Waste> findAll();
 }
