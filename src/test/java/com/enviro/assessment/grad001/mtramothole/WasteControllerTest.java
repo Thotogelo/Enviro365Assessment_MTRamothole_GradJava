@@ -66,7 +66,7 @@ class WasteControllerTest {
         mockMvc.perform(post("/v1/api/waste/save")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(waste)))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(content().json(objectMapper.writeValueAsString(waste)));
     }
 
