@@ -7,6 +7,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/*Provided a service class that will be used to interact with the WasteRepository and Controller
+Separation of concerns is achieved by having the service class handle the business logic
+ And the repository class handle the database operations
+*/
 @Service
 public class WasteService {
 
