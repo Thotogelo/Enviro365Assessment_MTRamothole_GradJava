@@ -4,8 +4,6 @@ import com.enviro.assessment.grad001.mtramothole.model.Waste;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface WasteRepository extends CrudRepository<Waste, Long> {
 
@@ -13,6 +11,6 @@ public interface WasteRepository extends CrudRepository<Waste, Long> {
 
     int deleteWasteByWastecategory(String wastecategory);
 
-    List<Waste> findWasteByWastecategory(String wastecategory);
+    Iterable<Waste> findWasteByWastecategory(String wastecategory);
 
 }

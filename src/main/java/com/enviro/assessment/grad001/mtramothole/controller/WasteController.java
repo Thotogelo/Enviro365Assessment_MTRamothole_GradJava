@@ -8,7 +8,6 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/v1/api/waste")
@@ -36,8 +35,8 @@ public class WasteController {
 
     @GetMapping(value = "/category/{category}")
     @Operation(summary = "Get a waste list by category")
-    public ResponseEntity<List<Waste>> getWasteByCategory(@PathVariable("category") String category) {
-        List<Waste> waste = wasteService.findWasteListByWastecategory(category);
+    public ResponseEntity<Iterable<Waste>> getWasteByCategory(@PathVariable("category") String category) {
+        Iterable<Waste> waste = wasteService.findWasteListByWastecategory(category);
         return (waste != null) ? ResponseEntity.ok(waste) : ResponseEntity.notFound().build();
     }
 
@@ -63,7 +62,7 @@ public class WasteController {
 
     @GetMapping(value = "/all")
     @Operation(summary = "Get all waste data")
-    public ResponseEntity<List<Waste>> getAllWastes() {
+    public ResponseEntity<Iterable<Waste>> getAllWastes() {
         return ResponseEntity.ok(wasteService.findAll());
     }
 }
