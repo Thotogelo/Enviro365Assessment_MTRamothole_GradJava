@@ -4,6 +4,7 @@ import com.enviro.assessment.grad001.mtramothole.exception.WasteNotFoundExceptio
 import com.enviro.assessment.grad001.mtramothole.model.Waste;
 import com.enviro.assessment.grad001.mtramothole.repository.WasteRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -24,36 +25,31 @@ public class WasteService {
         return wasteRepository.save(waste);
     }
 
-    public Waste updateWaste(Waste waste) {
-        return wasteRepository.save(waste);
+    public Waste updateWaste(Waste updateWaste) {
+        Waste storedWaste = findWasteById(updateWaste.getId());
+        storedWaste.setWastecategory(updateWaste.getWastecategory());
+        storedWaste.setDisposalguideline(updateWaste.getDisposalguideline());
+        storedWaste.setRecyclingtip(updateWaste.getRecyclingtip());
+        return wasteRepository.save(storedWaste);
     }
 
     public Waste findWasteById(Long id) {
-        Optional<Waste> waste = wasteRepository.findById(id);
-        return waste.orElseThrow(() -> new WasteNotFoundException("Waste with id " + id + " not found."));
+        Optional<Waste> storedWaste = wasteRepository.findById(id);
+        return storedWaste.orElseThrow(() -> new WasteNotFoundException("Waste with id " + id + " not found."));
     }
 
     public void removeWasteById(Long id) {
-        int rowsAffected = wasteRepository.deleteWasteById(id);
-        if (rowsAffected == 0) {
-            throw new WasteNotFoundException("Waste with id " + id + " not found.");
-        }
+        Waste storedWaste = findWasteById(id);
+        wasteRepository.deleteById(storedWaste.getId());
     }
 
     public void removeWasteListByWastecategory(String category) {
-        int rowsAffected = wasteRepository.deleteWasteByWastecategory(category);
-        if (rowsAffected == 0) {
-            throw new WasteNotFoundException("Waste list with category " + category + " not found.");
-        }
+        Iterable<Waste> existsWasteList = findWasteListByWastecategory(category.toLowerCase());
+        wasteRepository.deleteAll(existsWasteList);
     }
 
     public Iterable<Waste> findWasteListByWastecategory(String category) {
-        Iterable<Waste> wasteList = wasteRepository.findWasteByWastecategory(category);
-        if (wasteList != null) {
-            return wasteList;
-        } else {
-            throw new WasteNotFoundException("Waste lists with category " + category + " not found.");
-        }
+        return wasteRepository.findWasteByWastecategory(category);
     }
 
     public Iterable<Waste> findAll() {

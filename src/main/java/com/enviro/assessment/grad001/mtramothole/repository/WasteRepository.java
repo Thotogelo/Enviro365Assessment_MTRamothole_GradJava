@@ -7,10 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface WasteRepository extends CrudRepository<Waste, Long> {
 
-    int deleteWasteById(Long id);
-
-    int deleteWasteByWastecategory(String wastecategory);
-
     Iterable<Waste> findWasteByWastecategory(String wastecategory);
-
 }

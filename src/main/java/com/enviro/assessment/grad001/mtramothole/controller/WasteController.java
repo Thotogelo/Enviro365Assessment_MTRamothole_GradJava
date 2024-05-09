@@ -5,6 +5,7 @@ import com.enviro.assessment.grad001.mtramothole.service.WasteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +24,8 @@ public class WasteController {
     @PostMapping(value = "/save")
     @Operation(summary = "Save a waste")
     public ResponseEntity<Waste> saveWaste(@Valid @RequestBody Waste waste) {
-        return ResponseEntity.ok(wasteService.saveWaste(waste));
+        Waste storedWaste = wasteService.saveWaste(waste);
+        return ResponseEntity.status(HttpStatus.CREATED).body(storedWaste);
     }
 
     @GetMapping(value = "/{id}")
@@ -37,27 +39,28 @@ public class WasteController {
     @Operation(summary = "Get a waste list by category")
     public ResponseEntity<Iterable<Waste>> getWasteByCategory(@PathVariable("category") String category) {
         Iterable<Waste> waste = wasteService.findWasteListByWastecategory(category);
-        return (waste != null) ? ResponseEntity.ok(waste) : ResponseEntity.notFound().build();
+        return (waste != null) ? ResponseEntity.ok(waste) : ResponseEntity.noContent().build();
     }
 
     @DeleteMapping(value = "/delete/{id}")
     @Operation(summary = "Delete a waste by id")
     public ResponseEntity<String> deleteWasteById(@PathVariable("id") Long wasteid) {
         wasteService.removeWasteById(wasteid);
-        return ResponseEntity.ok("Waste successfully deleted.");
+        return ResponseEntity.ok("Waste removed.");
     }
 
     @DeleteMapping(value = "/delete/category/{category}")
     @Operation(summary = "Delete a waste list by category")
     public ResponseEntity<String> deleteWasteByCategory(@PathVariable("category") String category) {
         wasteService.removeWasteListByWastecategory(category);
-        return ResponseEntity.ok("Waste list successfully deleted.");
+        return ResponseEntity.ok("Waste list deleted.");
     }
 
     @PutMapping(value = "/update")
     @Operation(summary = "Update a waste")
     public ResponseEntity<Waste> updateWaste(@Valid @RequestBody Waste waste) {
-        return ResponseEntity.ok(wasteService.updateWaste(waste));
+        Waste updateWaste = wasteService.updateWaste(waste);
+        return ResponseEntity.ok(updateWaste);
     }
 
     @GetMapping(value = "/all")
