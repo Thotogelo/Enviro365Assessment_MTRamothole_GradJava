@@ -4,7 +4,6 @@ import com.enviro.assessment.grad001.mtramothole.exception.WasteNotFoundExceptio
 import com.enviro.assessment.grad001.mtramothole.model.Waste;
 import com.enviro.assessment.grad001.mtramothole.repository.WasteRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
