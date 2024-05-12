@@ -21,15 +21,23 @@ public class WasteService {
     }
 
     public Waste saveWaste(Waste waste) {
-        return wasteRepository.save(waste);
+        try {
+            return wasteRepository.save(waste);
+        } catch (Exception e) {
+            throw new RuntimeException("Error occurred while saving waste", e);
+        }
     }
 
     public Waste updateWaste(Waste updateWaste) {
-        Waste storedWaste = findWasteById(updateWaste.getId());
-        storedWaste.setWastecategory(updateWaste.getWastecategory());
-        storedWaste.setDisposalguideline(updateWaste.getDisposalguideline());
-        storedWaste.setRecyclingtip(updateWaste.getRecyclingtip());
-        return wasteRepository.save(storedWaste);
+        try {
+            Waste storedWaste = findWasteById(updateWaste.getId());
+            storedWaste.setWastecategory(updateWaste.getWastecategory());
+            storedWaste.setDisposalguideline(updateWaste.getDisposalguideline());
+            storedWaste.setRecyclingtip(updateWaste.getRecyclingtip());
+            return wasteRepository.save(storedWaste);
+        } catch (Exception e) {
+            throw new RuntimeException("Error occurred while updating waste", e);
+        }
     }
 
     public Waste findWasteById(Long id) {
@@ -38,13 +46,22 @@ public class WasteService {
     }
 
     public void removeWasteById(Long id) {
-        Waste storedWaste = findWasteById(id);
-        wasteRepository.deleteById(storedWaste.getId());
+        try {
+            Waste storedWaste = findWasteById(id);
+            System.out.println(storedWaste.getId());
+            wasteRepository.deleteById(storedWaste.getId());
+        } catch (Exception e) {
+            throw new RuntimeException("Error occurred while removing waste by id", e);
+        }
     }
 
     public void removeWasteListByWastecategory(String category) {
-        Iterable<Waste> existsWasteList = findWasteListByWastecategory(category.toLowerCase());
-        wasteRepository.deleteAll(existsWasteList);
+        try {
+            Iterable<Waste> existsWasteList = findWasteListByWastecategory(category.toLowerCase());
+            wasteRepository.deleteAll(existsWasteList);
+        } catch (Exception e) {
+            throw new RuntimeException("Error occurred while removing waste list by category", e);
+        }
     }
 
     public Iterable<Waste> findWasteListByWastecategory(String category) {
