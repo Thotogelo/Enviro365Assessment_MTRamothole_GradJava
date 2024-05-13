@@ -48,7 +48,6 @@ public class WasteService {
     public void removeWasteById(Long id) {
         try {
             Waste storedWaste = findWasteById(id);
-            System.out.println(storedWaste.getId());
             wasteRepository.deleteById(storedWaste.getId());
         } catch (Exception e) {
             throw new RuntimeException("Error occurred while removing waste by id", e);
@@ -65,7 +64,7 @@ public class WasteService {
     }
 
     public Iterable<Waste> findWasteListByWastecategory(String category) {
-        return wasteRepository.findWasteByWastecategory(category);
+        return wasteRepository.findWasteByWastecategory(category.toLowerCase());
     }
 
     public Iterable<Waste> findAll() {
