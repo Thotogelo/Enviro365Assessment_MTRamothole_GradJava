@@ -1,10 +1,12 @@
 package com.enviro.assessment.grad001.mtramothole.service;
 
-import com.enviro.assessment.grad001.mtramothole.exception.WasteNotFoundException;
 import com.enviro.assessment.grad001.mtramothole.model.Waste;
 import com.enviro.assessment.grad001.mtramothole.repository.WasteRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /*Provided a service class that will be used to interact with the WasteRepository and Controller
@@ -20,55 +22,49 @@ public class WasteService {
         this.wasteRepository = wasteRepository;
     }
 
-    public Waste saveWaste(Waste waste) {
-        try {
-            return wasteRepository.save(waste);
-        } catch (Exception e) {
-            throw new RuntimeException("Error occurred while saving waste", e);
+    public ResponseEntity<Waste> saveWaste(Waste waste) {
+        return new ResponseEntity<>(wasteRepository.save(waste), HttpStatus.CREATED);
+    }
+
+    public ResponseEntity<Waste> updateWaste(Waste updateWaste) {
+
+        if (!wasteRepository.existsById(updateWaste.getId())) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        Waste storedWaste = wasteRepository.findById(updateWaste.getId()).get();
+        storedWaste.setWastecategory(updateWaste.getWastecategory());
+        storedWaste.setDisposalguideline(updateWaste.getDisposalguideline());
+        storedWaste.setRecyclingtip(updateWaste.getRecyclingtip());
+        return new ResponseEntity<>(wasteRepository.save(storedWaste), HttpStatus.CREATED);
     }
 
-    public Waste updateWaste(Waste updateWaste) {
-        try {
-            Waste storedWaste = findWasteById(updateWaste.getId());
-            storedWaste.setWastecategory(updateWaste.getWastecategory());
-            storedWaste.setDisposalguideline(updateWaste.getDisposalguideline());
-            storedWaste.setRecyclingtip(updateWaste.getRecyclingtip());
-            return wasteRepository.save(storedWaste);
-        } catch (Exception e) {
-            throw new RuntimeException("Error occurred while updating waste", e);
-        }
+    public ResponseEntity<Waste> findWasteById(Long id) {
+        Optional<Waste> waste = wasteRepository.findById(id);
+        return waste.map(value -> new ResponseEntity<>(value, HttpStatus.FOUND)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    public Waste findWasteById(Long id) {
-        Optional<Waste> storedWaste = wasteRepository.findById(id);
-        return storedWaste.orElseThrow(() -> new WasteNotFoundException("Waste with id " + id + " not found."));
+    public ResponseEntity<Object> removeWasteById(Long id) {
+        if (!wasteRepository.existsById(id))
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        wasteRepository.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    public void removeWasteById(Long id) {
-        try {
-            Waste storedWaste = findWasteById(id);
-            System.out.println(storedWaste.getId());
-            wasteRepository.deleteById(storedWaste.getId());
-        } catch (Exception e) {
-            throw new RuntimeException("Error occurred while removing waste by id", e);
-        }
+    public ResponseEntity<Object> removeWasteListByWastecategory(String category) {
+
+        if (wasteRepository.findWasteByWastecategory(category).isEmpty())
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        wasteRepository.deleteAll(wasteRepository.findWasteByWastecategory(category.toLowerCase()));
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    public void removeWasteListByWastecategory(String category) {
-        try {
-            Iterable<Waste> existsWasteList = findWasteListByWastecategory(category.toLowerCase());
-            wasteRepository.deleteAll(existsWasteList);
-        } catch (Exception e) {
-            throw new RuntimeException("Error occurred while removing waste list by category", e);
-        }
+    public ResponseEntity<List<Waste>> findWasteListByWastecategory(String category) {
+        return ResponseEntity.ok(wasteRepository.findWasteByWastecategory(category));
     }
 
-    public Iterable<Waste> findWasteListByWastecategory(String category) {
-        return wasteRepository.findWasteByWastecategory(category);
-    }
-
-    public Iterable<Waste> findAll() {
-        return wasteRepository.findAll();
+    public ResponseEntity<List<Waste>> findAll() {
+        return ResponseEntity.ok(wasteRepository.findAll());
     }
 }

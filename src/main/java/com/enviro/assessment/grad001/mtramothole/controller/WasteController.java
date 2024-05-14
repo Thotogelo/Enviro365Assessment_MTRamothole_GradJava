@@ -2,12 +2,12 @@ package com.enviro.assessment.grad001.mtramothole.controller;
 
 import com.enviro.assessment.grad001.mtramothole.model.Waste;
 import com.enviro.assessment.grad001.mtramothole.service.WasteService;
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -23,42 +23,36 @@ public class WasteController {
 
     @PostMapping(value = "/save")
     public ResponseEntity<Waste> saveWaste(@Valid @RequestBody Waste waste) {
-        Waste storedWaste = wasteService.saveWaste(waste);
-        return ResponseEntity.status(HttpStatus.CREATED).body(storedWaste);
+        return wasteService.saveWaste(waste);
     }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Waste> getWasteById(@PathVariable("id") Long wasteid) {
-        Waste waste = wasteService.findWasteById(wasteid);
-        return (waste != null) ? ResponseEntity.ok(waste) : ResponseEntity.notFound().build();
+        return wasteService.findWasteById(wasteid);
     }
 
     @GetMapping(value = "/category/{category}")
-    public ResponseEntity<Iterable<Waste>> getWasteByCategory(@PathVariable("category") String category) {
-        Iterable<Waste> waste = wasteService.findWasteListByWastecategory(category);
-        return (waste != null) ? ResponseEntity.ok(waste) : ResponseEntity.noContent().build();
+    public ResponseEntity<List<Waste>> getWasteByCategory(@PathVariable("category") String category) {
+        return wasteService.findWasteListByWastecategory(category);
     }
 
     @DeleteMapping(value = "/delete/{id}")
-    public ResponseEntity<String> deleteWasteById(@PathVariable("id") Long wasteid) {
-        wasteService.removeWasteById(wasteid);
-        return ResponseEntity.ok("Waste removed.");
+    public ResponseEntity<Object> deleteWasteById(@PathVariable("id") Long wasteid) {
+        return wasteService.removeWasteById(wasteid);
     }
 
     @DeleteMapping(value = "/delete/category/{category}")
-    public ResponseEntity<String> deleteWasteByCategory(@PathVariable("category") String category) {
-        wasteService.removeWasteListByWastecategory(category);
-        return ResponseEntity.ok("Waste list deleted.");
+    public ResponseEntity<Object> deleteWasteByCategory(@PathVariable("category") String category) {
+        return wasteService.removeWasteListByWastecategory(category);
     }
 
     @PutMapping(value = "/update")
     public ResponseEntity<Waste> updateWaste(@Valid @RequestBody Waste waste) {
-        Waste updateWaste = wasteService.updateWaste(waste);
-        return ResponseEntity.ok(updateWaste);
+        return wasteService.updateWaste(waste);
     }
 
     @GetMapping(value = "/all")
-    public ResponseEntity<Iterable<Waste>> getAllWastes() {
-        return ResponseEntity.ok(wasteService.findAll());
+    public ResponseEntity<List<Waste>> getAllWastes() {
+        return wasteService.findAll();
     }
 }
