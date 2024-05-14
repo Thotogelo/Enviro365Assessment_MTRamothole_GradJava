@@ -1,11 +1,13 @@
 package com.enviro.assessment.grad001.mtramothole.repository;
 
 import com.enviro.assessment.grad001.mtramothole.model.Waste;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface WasteRepository extends CrudRepository<Waste, Long> {
+import java.util.List;
 
-    Iterable<Waste> findWasteByWastecategory(String wastecategory);
+@Repository
+public interface WasteRepository extends ListCrudRepository<Waste, Long> {
+
+    List<Waste> findWasteByWastecategory(String wastecategory);
 }
