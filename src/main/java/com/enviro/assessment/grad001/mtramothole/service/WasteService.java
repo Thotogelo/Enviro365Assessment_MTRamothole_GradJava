@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.LinkedList;
 import java.util.Optional;
 
 /*Provided a service class that will be used to interact with the WasteRepository and Controller
@@ -23,6 +23,9 @@ public class WasteService {
     }
 
     public ResponseEntity<Waste> saveWaste(Waste waste) {
+        if (wasteRepository.existsById(waste.getId()))
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
         return new ResponseEntity<>(wasteRepository.save(waste), HttpStatus.CREATED);
     }
 
@@ -52,19 +55,20 @@ public class WasteService {
     }
 
     public ResponseEntity<Object> removeWasteListByWastecategory(String category) {
+        LinkedList<Waste> wasteList = (LinkedList<Waste>) wasteRepository.findWasteByWastecategory(category);
 
-        if (wasteRepository.findWasteByWastecategory(category).isEmpty())
+        if (wasteList.isEmpty())
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         wasteRepository.deleteAll(wasteRepository.findWasteByWastecategory(category.toLowerCase()));
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    public ResponseEntity<List<Waste>> findWasteListByWastecategory(String category) {
+    public ResponseEntity<Iterable<Waste>> findWasteListByWastecategory(String category) {
         return ResponseEntity.ok(wasteRepository.findWasteByWastecategory(category));
     }
 
-    public ResponseEntity<List<Waste>> findAll() {
+    public ResponseEntity<Iterable<Waste>> findAll() {
         return ResponseEntity.ok(wasteRepository.findAll());
     }
 }

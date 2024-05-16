@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface WasteRepository extends ListCrudRepository<Waste, Long> {
 
-    List<Waste> findWasteByWastecategory(String wastecategory);
+    Iterable<Waste> findWasteByWastecategory(String wastecategory);
 }

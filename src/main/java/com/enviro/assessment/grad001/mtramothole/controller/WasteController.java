@@ -32,7 +32,7 @@ public class WasteController {
     }
 
     @GetMapping(value = "/category/{category}")
-    public ResponseEntity<List<Waste>> getWasteByCategory(@PathVariable("category") String category) {
+    public ResponseEntity<Iterable<Waste>> getWasteByCategory(@PathVariable("category") String category) {
         return wasteService.findWasteListByWastecategory(category);
     }
 
@@ -52,7 +52,7 @@ public class WasteController {
     }
 
     @GetMapping(value = "/all")
-    public ResponseEntity<List<Waste>> getAllWastes() {
+    public ResponseEntity<Iterable<Waste>> getAllWastes() {
         return wasteService.findAll();
     }
 }
